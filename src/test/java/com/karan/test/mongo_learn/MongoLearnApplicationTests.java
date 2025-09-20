@@ -7,6 +7,10 @@ import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.karan.test.mongo_learn.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -19,14 +23,15 @@ class MongoLearnApplicationTests {
 
     @Test
     void   createOrder(){
-        Order  order = Order.builder()
-                .status("pending ")
-                .quantity(5)
-                .totalPrice(340)
-                .build();
-
-        order =  repository.insert(order);
-        System.out.println(order);
+        for (int i = 1; i < 15; i++) {
+            Order order = Order.builder()
+                    .status("pending")
+                    .quantity((int) (Math.random()*10))
+                    .totalPrice((int) (Math.random()*1000))
+                    .build();
+            order = repository.insert(order);
+            System.out.println(order);
+        }
     }
 
     @Test
@@ -50,6 +55,15 @@ class MongoLearnApplicationTests {
     void  deleteItem(){
         List<Order>  orders=  repository.findByStatus("pending ");
 //        repository.deleteAll(orders);
-        repository.deleteById(orders.get(0).getId());
+//        repository.deleteById(orders.get(0).getId());
+        repository.deleteAll();
+    }
+
+    @Test
+    void getPage(){
+        Pageable pageable =  PageRequest.of(10,5, Sort.by(Sort.Direction.DESC,"totalPrice"));
+         Page<Order> page =  repository.findAll(pageable);
+        List<Order> orders = page.getContent();
+        orders.forEach(System.out::println);
     }
 }
