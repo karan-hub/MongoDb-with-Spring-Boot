@@ -3,6 +3,8 @@ package com.karan.test.mongo_learn;
 
 import com.karan.test.mongo_learn.entity.Address;
 import com.karan.test.mongo_learn.entity.Order;
+import com.karan.test.mongo_learn.entity.Product;
+import com.karan.test.mongo_learn.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ class MongoLearnApplicationTests {
                             .street("ramshej")
                             .state("maharatra")
                             .build())
+                    .products(List.of(productRepository.findAll().get(i-1)))
                     .build();
             order = repository.insert(order);
             System.out.println(order);
@@ -60,7 +63,7 @@ class MongoLearnApplicationTests {
     }
 
     @Test
-    void  deleteItem(){
+    void  deleteorder(){
         List<Order>  orders=  repository.findByStatus("pending ");
 //        repository.deleteAll(orders);
 //        repository.deleteById(orders.get(0).getId());
@@ -80,4 +83,37 @@ class MongoLearnApplicationTests {
         List<Order>  orders =  repository.findByAddressCity("nashik");
         orders.forEach(System.out::println);
     }
+
+
+//    product
+
+    @Autowired
+    private ProductRepository productRepository;
+    @Test
+    void  creteProduct(){
+        boolean on =true;
+        for (int i = 1; i < 15; i++) {
+            if (on){
+                Product dell =  Product.builder()
+                        .name("Dell Latitude 3510 2-in-1 " +i)
+                        .price((int) (Math.random()*1000))
+                        .category("Electronics")
+                        .build();
+                productRepository.save(dell);
+                on=false;
+
+            }else{
+                Product iPhone =  Product.builder()
+                        .name("iPhone "+i)
+                        .price((int) (Math.random() * 1000))
+                        .category("Electronics")
+                        .build();
+                productRepository.save(iPhone);
+                on =true;
+            }
+
+        }
+
+    }
+
 }
