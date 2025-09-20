@@ -20,4 +20,6 @@ public interface OrderRepository   extends MongoRepository<Order, String> {
     @Query("{ 'createdDate': { $gte: ?0, $lt: ?1 } }")
     List<Order> findOrdersInDateRange(LocalDateTime start, LocalDateTime end);
 
+    List<Order> findByAddressCity(String city);
+
 }

@@ -74,4 +74,10 @@ class MongoLearnApplicationTests {
         List<Order> orders = page.getContent();
         orders.forEach(System.out::println);
     }
+
+    @Test
+    void  embedQuery(){
+        List<Order>  orders =  repository.findByAddressCity("nashik");
+        orders.forEach(System.out::println);
+    }
 }
