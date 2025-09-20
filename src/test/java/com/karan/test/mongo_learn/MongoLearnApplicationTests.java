@@ -116,4 +116,10 @@ class MongoLearnApplicationTests {
 
     }
 
+//    projection
+    @Test
+    void  findByCity(){
+        List<Order> cities = repository.findByCity("nashik");
+        cities.forEach(System.out::println);
+    }
 }

@@ -22,4 +22,9 @@ public interface OrderRepository   extends MongoRepository<Order, String> {
 
     List<Order> findByAddressCity(String city);
 
+    //    projection
+
+    @Query(value = "{'address.city': ?0 }" , fields = "{'_id':1, 'quantity':1}")
+    List<Order> findByCity(String  city);
+
 }
