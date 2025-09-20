@@ -26,6 +26,8 @@ public class Order {
     private String status;
 
     private  Integer totalPrice;
+
+    private  Address address;
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate
