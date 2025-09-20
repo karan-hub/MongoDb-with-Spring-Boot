@@ -46,4 +46,10 @@ class MongoLearnApplicationTests {
         orders.forEach(System.out::println);
     }
 
+    @Test
+    void  deleteItem(){
+        List<Order>  orders=  repository.findByStatus("pending ");
+//        repository.deleteAll(orders);
+        repository.deleteById(orders.get(0).getId());
+    }
 }

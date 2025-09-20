@@ -17,7 +17,7 @@ public interface OrderRepository   extends MongoRepository<Order, String> {
     @Query("{ 'status': ?0, 'totalPrice': { $gte: ?1 } }")
     List<Order> findPendingOrdersAbovePrice(String status, double minPrice);
 
-    @Query("{ 'createdAt': { $gte: ?0, $lt: ?1 } }")
+    @Query("{ 'createdDate': { $gte: ?0, $lt: ?1 } }")
     List<Order> findOrdersInDateRange(LocalDateTime start, LocalDateTime end);
 
 }
