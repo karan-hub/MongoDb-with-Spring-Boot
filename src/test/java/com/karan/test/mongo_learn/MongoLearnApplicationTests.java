@@ -1,6 +1,7 @@
 package com.karan.test.mongo_learn;
 
 
+import com.karan.test.mongo_learn.entity.Address;
 import com.karan.test.mongo_learn.entity.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Or;
@@ -28,6 +29,13 @@ class MongoLearnApplicationTests {
                     .status("pending")
                     .quantity((int) (Math.random()*10))
                     .totalPrice((int) (Math.random()*1000))
+                    .address(Address.builder()
+                            .city("nashik")
+                            .country("india")
+                            .zipCode("20202")
+                            .street("ramshej")
+                            .state("maharatra")
+                            .build())
                     .build();
             order = repository.insert(order);
             System.out.println(order);
